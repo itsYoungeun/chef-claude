@@ -1,11 +1,30 @@
 export default function Main() {
+    const ingredients = ["Chicken", "Oregano", "Tomatoes"]
+
+    const ingredientsListItems = ingredients.map((ingredient) => {
+        return <li key={ingredient}>{ingredient}</li>
+    })
+
+    function handleSubmit(event) {
+        event.preventDefault()
+        console.log("Form submitted!")
+        const formData = new FormData(event.currentTarget)
+        const newIngredient = formData.get("ingredient")
+        ingredients.push(newIngredient)
+        console.log(ingredients)
+    }
+
     return (
         <main className="p-6">
-            <form className="flex items-center justify-center gap-3">
+            <form 
+                onSubmit={handleSubmit}
+                className="flex items-center justify-center gap-3"
+            >
                 <input
                     type="text"
                     placeholder="e.g. oregano"
                     aria-label="Add ingredient"
+                    name="ingredient"
                     className="md:size-full md:p-1.5 md:pl-3 max-w-[24rem] border-2 rounded-md 
                     border-gray-300 pl-3 p-1 font placeholder-gray-600 text-[0.75rem]"
                 />
@@ -16,6 +35,7 @@ export default function Main() {
                     + Add ingredient
                 </button>
             </form>
+            <ul>{ingredientsListItems}</ul>
         </main>
     )
 }
