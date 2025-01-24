@@ -35,7 +35,17 @@ export default function Main() {
                     + Add ingredient
                 </button>
             </form>
-            <ul>{ingredientsListItems}</ul>
+            <section>
+                <h2 className="font-bold text-xl mt-4">Ingredients on hand:</h2>
+                <ul className="m-8">{ingredientsListItems}</ul>
+                <div className="bg-gray-100">
+                    <div className="p-4">
+                        <h3 className="font-bold">Ready for a recipe?</h3>
+                        <p>Generate a recipe from your list of ingredients.</p>
+                    </div>
+                    <button className="font border border-r-2 bg-orange-400">Get a recipe</button>
+                </div>
+            </section>
         </main>
     )
 }
