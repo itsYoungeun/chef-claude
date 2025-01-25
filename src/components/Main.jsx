@@ -3,13 +3,13 @@ import React from 'react';
 export default function Main() {
     const [ingredients, setIngredients] = React.useState([]);
 
-    const ingredientsListItems = ingredients.map((ingredient) => {
-        return <li key={ingredient}>{ingredient}</li>
-    })
+    const ingredientsListItems = ingredients.map((ingredient) => (
+        <li key={ingredient}>{ingredient}</li>
+    ))
 
-    function handleSubmit(event) {
-        event.preventDefault()
-        const formData = new FormData(event.currentTarget)
+    function addIngredient(event) {
+        event.preventDefault();
+        const formData = new FormData(event.target);
         const newIngredient = formData.get("ingredient")
         setIngredients(prevIngredients => [...prevIngredients, newIngredient])
     }
@@ -17,7 +17,7 @@ export default function Main() {
     return (
         <main className="p-6">
             <form 
-                onSubmit={handleSubmit}
+                onSubmit={addIngredient}
                 className="flex items-center justify-center gap-3"
             >
                 <input
@@ -35,17 +35,19 @@ export default function Main() {
                     + Add ingredient
                 </button>
             </form>
-            <section>
+            {ingredients.length > 0 && <section className="px-6">
                 <h2 className="font-bold text-xl mt-4">Ingredients on hand:</h2>
                 <ul className="m-8">{ingredientsListItems}</ul>
-                <div className="bg-gray-100">
-                    <div className="p-4">
-                        <h3 className="font-bold">Ready for a recipe?</h3>
-                        <p>Generate a recipe from your list of ingredients.</p>
+                {ingredients.length > 3 && <div className="bg-gray-100">
+                    <div className="flex items-center justify-between">
+                        <div className="p-6">
+                            <h3 className="font font-bold pb-4">Ready for a recipe?</h3>
+                            <p className="font">Generate a recipe from your list of ingredients.</p>
+                        </div>
+                        <button className="font text-gray-100 rounded bg-orange-500 p-1 pr-3 pl-3 mr-6">Get a recipe</button>
                     </div>
-                    <button className="font border border-r-2 bg-orange-400">Get a recipe</button>
-                </div>
-            </section>
+                </div>}
+            </section>}
         </main>
     )
 }
