@@ -4,7 +4,7 @@ export default function IngredientsList(props) {
     ))
 
     return (
-        <section className="px-6">
+        <section className="px-6 mb-8">
             <h2 className="font-bold text-xl mt-4">Ingredients on hand:</h2>
             <ul className="m-8">{ingredientsListItems}</ul>
             {props.ingredients.length > 3 && <div className="bg-gray-100">
@@ -15,7 +15,7 @@ export default function IngredientsList(props) {
                     </div>
                     <button 
                         className="font text-gray-100 rounded bg-orange-500 p-1 pr-3 pl-3 mr-6"
-                        onClick={props.toggleRecipeShown}
+                        onClick={props.getRecipe}
                     >
                         Get a recipe
                     </button>

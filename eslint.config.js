@@ -35,5 +35,10 @@ export default [
       ],
       "react/prop-types": "off",
     },
+    env: {
+      browser: true, // If using in the browser
+      node: true,    // Allow Node.js globals like `process`
+      es6: true,
+    },
   },
 ]
