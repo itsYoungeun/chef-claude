@@ -7,16 +7,35 @@ export default function Main() {
     const [ingredients, setIngredients] = React.useState([]);
     const [recipe, setRecipe] = React.useState("");
     const recipeSection = React.useRef(null);
+    const [loading, setLoading] = React.useState(false);
+    const loaderRef = React.useRef(null); 
 
     React.useEffect(() => {
-        if (recipe !== "" && recipeSection.current !== null) {
-            recipeSection.current.scrollIntoView({ behavior: "smooth" });
+        if (!loading && recipe && recipeSection.current) {
+            // recipeSection.current.scrollIntoView({ behavior: "smooth" });
+            const yCoord = recipeSection.current.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+                top: yCoord,
+                behavior: "smooth"
+            });
         }
-    }, [recipe])
+    }, [recipe, loading])
+
+    React.useEffect(() => {
+        if (loading && loaderRef.current) {
+            const yCoord = loaderRef.current.getBoundingClientRect().top + window.scrollY;
+            window.scrollTo({
+                top: yCoord,
+                behavior: "smooth"
+            });
+        }
+    }, [loading]);
 
     async function getRecipe() {
+        setLoading(true);
         const recipeMarkdown = await getRecipeFromMistral(ingredients)
         setRecipe(recipeMarkdown)
+        setLoading(false);
     }
 
     function addIngredient(event) {
@@ -49,12 +68,20 @@ export default function Main() {
             </form>
             {ingredients.length > 0 && 
                 <IngredientsList 
-                    ref={recipeSection}
                     ingredients={ingredients} 
                     getRecipe={getRecipe}
                 />
             }
-            {recipe && <ClaudeRecipe recipe={recipe} />}
+            {loading && (
+                <div ref={loaderRef} className="flex items-center justify-center my-4">
+                    <div className="animate-spin h-6 w-6 border-4 border-gray-300 border-t-black rounded-full"></div>
+                    <span className="ml-2 text-gray-600">Generating recipe...</span>
+                </div>
+            )}
+            {recipe && (
+                <div ref={recipeSection}>
+                    <ClaudeRecipe recipe={recipe} />
+                </div>)}
         </main>
     )
 }
