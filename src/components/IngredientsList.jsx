@@ -9,7 +9,7 @@ export default function IngredientsList(props) {
             <ul className="m-8">{ingredientsListItems}</ul>
             {props.ingredients.length > 3 && <div className="bg-gray-100">
                 <div className="flex items-center justify-between">
-                    <div className="p-6">
+                    <div ref={props.ref} className="p-6">
                         <h3 className="font font-bold pb-4">Ready for a recipe?</h3>
                         <p className="font">Generate a recipe from your list of ingredients.</p>
                     </div>
